@@ -229,18 +229,16 @@ window.addEventListener('resize', requestDriftUpdate);
 
 // Intersection Observer for Fade-in Animations
 const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px'
 };
 
-const fadeInObserver = new IntersectionObserver(function(entries) {
+const fadeInObserver = new IntersectionObserver(function(entries, observer) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
-        } else {
-            entry.target.style.opacity = '0';
-            entry.target.style.transform = 'translateY(24px)';
+            observer.unobserve(entry.target); // Keep visible once revealed to eliminate scroll flicker
         }
     });
 }, observerOptions);
@@ -251,23 +249,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     animatedElements.forEach((el, index) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(24px)';
-        el.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
-        el.style.transitionDelay = `${(index % 4) * 0.08}s`;
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        el.style.transitionDelay = `${(index % 4) * 0.06}s`;
         fadeInObserver.observe(el);
     });
 });
 
-// Heading reveal animation
-const headingObserver = new IntersectionObserver(function(entries) {
+// Heading reveal animation (reveal once, no blur unblur loop)
+const headingObserver = new IntersectionObserver(function(entries, observer) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-        } else {
-            entry.target.classList.remove('is-visible');
+            observer.unobserve(entry.target); // Keep visible and sharp once revealed
         }
     });
-}, { threshold: 0.3 });
+}, { threshold: 0.2 });
 
 document.addEventListener('DOMContentLoaded', function() {
     const headings = document.querySelectorAll('.hero-title, .hero-subtitle, .section-title');
@@ -277,8 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Section Collide Animation on Scroll
+// Section Collide Animation on Scroll (desktop only)
 const sectionCollideObserver = new IntersectionObserver(function(entries) {
+    if (window.innerWidth <= 860) return;
     entries.forEach(entry => {
         if (entry.isIntersecting && !entry.target.classList.contains('collide-animated')) {
             entry.target.classList.add('collide-animate');
@@ -287,9 +285,6 @@ const sectionCollideObserver = new IntersectionObserver(function(entries) {
             setTimeout(() => {
                 entry.target.classList.remove('collide-animate');
             }, 600);
-        } else if (!entry.isIntersecting) {
-            entry.target.classList.remove('collide-animated');
-            entry.target.classList.remove('collide-animate');
         }
     });
 }, { threshold: 0.2 });
@@ -315,16 +310,17 @@ document.addEventListener('DOMContentLoaded', function() {
 // Parallax Effect for Hero Background
 window.addEventListener('scroll', function() {
     const heroBackground = document.querySelector('.hero-background');
-    if (heroBackground && window.innerWidth > 768) {
+    if (heroBackground && window.innerWidth > 1024) {
         const scrolled = window.pageYOffset;
         heroBackground.style.transform = `translateY(${scrolled * 0.4}px) scale(${1 + scrolled * 0.0001})`;
     }
 });
 
-// Circular Iris Animation for Hero Section
+// Circular Iris Animation for Hero Section (desktop only)
 let irisAnimationTicking = false;
 
 function updateIrisAnimation() {
+    if (window.innerWidth <= 1024) return;
     const heroSection = document.querySelector('.hero-section');
     const aboutSection = document.querySelector('.about-section');
     
