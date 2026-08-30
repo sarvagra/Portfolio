@@ -1,4 +1,4 @@
-// Mobile Navigation Management & Scroll Hide/Show
+// Mobile Navigation Toggle & Accessibility
 document.addEventListener('DOMContentLoaded', function() {
     const nav = document.getElementById('main-nav');
     const navToggle = document.getElementById('nav-toggle');
@@ -37,57 +37,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 navToggle.focus();
             }
         });
+
+        // Hide/Show Mobile Horizontal Navbar on Scroll (smaller screens only)
+        let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollThreshold = 6;
+
+        function handleNavScroll() {
+            if (window.innerWidth > 768) {
+                nav.classList.remove('nav--hidden');
+                return;
+            }
+
+            const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const diff = currentScrollY - lastScrollY;
+
+            // Keep navbar visible if menu is open
+            if (nav.classList.contains('is-open')) {
+                lastScrollY = currentScrollY;
+                return;
+            }
+
+            if (currentScrollY <= 15) {
+                // At the top: always visible
+                nav.classList.remove('nav--hidden');
+            } else if (diff > scrollThreshold && currentScrollY > 50) {
+                // Scrolling down: hide navbar
+                nav.classList.add('nav--hidden');
+            } else if (diff < -scrollThreshold) {
+                // Scrolling up: show navbar
+                nav.classList.remove('nav--hidden');
+            }
+
+            lastScrollY = currentScrollY;
+        }
+
+        window.addEventListener('scroll', handleNavScroll, { passive: true });
+        window.addEventListener('resize', handleNavScroll, { passive: true });
     }
-
-    // Mobile Horizontal Navbar Scroll Hide/Show
-    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
-    let navScrollTicking = false;
-
-    function updateMobileNavScroll() {
-        const mainNav = document.getElementById('main-nav');
-        if (!mainNav) {
-            navScrollTicking = false;
-            return;
-        }
-
-        if (window.innerWidth > 768) {
-            // Keep desktop/laptop nav unchanged
-            mainNav.classList.remove('nav-hidden');
-            navScrollTicking = false;
-            return;
-        }
-
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollDelta = currentScrollY - lastScrollY;
-
-        // If near top of page, always keep visible
-        if (currentScrollY <= 30) {
-            mainNav.classList.remove('nav-hidden');
-        } else if (scrollDelta > 6) {
-            // Scrolling DOWN -> comes in view
-            mainNav.classList.remove('nav-hidden');
-        } else if (scrollDelta < -6) {
-            // Scrolling UP -> hides
-            mainNav.classList.add('nav-hidden');
-        }
-
-        lastScrollY = Math.max(0, currentScrollY);
-        navScrollTicking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-        if (!navScrollTicking) {
-            window.requestAnimationFrame(updateMobileNavScroll);
-            navScrollTicking = true;
-        }
-    }, { passive: true });
-
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            const mainNav = document.getElementById('main-nav');
-            if (mainNav) mainNav.classList.remove('nav-hidden');
-        }
-    });
 });
 
 // Project Tab Filtering System

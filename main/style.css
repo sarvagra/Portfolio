@@ -1362,74 +1362,110 @@ body {
         left: 0;
         right: 0;
         width: 100%;
-        min-height: 48px;
-        background: rgba(10, 10, 10, 0.92);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid rgba(57, 255, 20, 0.25);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(57, 255, 20, 0.1);
+        height: 56px;
         display: flex;
         flex-direction: row;
+        justify-content: flex-end;
         align-items: center;
-        justify-content: center;
-        padding: 6px 12px;
+        padding: 0 20px;
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
         z-index: 1000;
         transform: translateY(0);
-        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
     }
 
-    .nav.nav-hidden {
-        transform: translateY(-110%);
-        pointer-events: none;
+    .nav.nav--hidden {
+        transform: translateY(-100%);
     }
 
     .nav-toggle {
-        display: none !important;
+        display: flex;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        width: 36px;
+        height: 32px;
+        padding: 4px 0;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .nav.is-open .nav-toggle {
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .hamburger-bar {
+        width: 26px;
+        height: 2px;
+        background: #ffffff;
+        border-radius: 2px;
+        box-shadow: 0 0 8px #39ff14, 0 0 14px rgba(57, 255, 20, 0.75);
+    }
+
+    .nav.is-open .hamburger-bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+        background: #ffffff;
+        box-shadow: 0 0 8px #39ff14, 0 0 14px rgba(57, 255, 20, 0.75);
+    }
+
+    .nav.is-open .hamburger-bar:nth-child(2) {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    .nav.is-open .hamburger-bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+        background: #ffffff;
+        box-shadow: 0 0 8px #39ff14, 0 0 14px rgba(57, 255, 20, 0.75);
     }
 
     .nav-links {
-        position: static;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: clamp(8px, 2.5vw, 20px);
-        width: 100%;
-        max-width: 540px;
-        padding: 0;
-        margin: 0;
+        position: fixed;
+        top: 56px;
+        right: 16px;
+        width: auto;
         background: transparent;
         border: none;
         box-shadow: none;
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        padding: 8px 0;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+        z-index: 999;
     }
 
-    .nav-links::-webkit-scrollbar {
-        display: none;
+    .nav.is-open .nav-links {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
     }
 
     .nav-link {
-        font-size: clamp(12px, 3.2vw, 14px);
-        padding: 6px 2px;
+        font-size: 15px;
+        padding: 6px 0;
         width: auto;
         min-height: auto;
-        white-space: nowrap;
         border-radius: 0;
         border: none;
         background: transparent;
         display: inline-flex;
-        align-items: center;
+        justify-content: flex-end;
+        text-align: right;
         color: var(--text-primary);
-        opacity: 0.8;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
     }
 
     .nav-link:hover,
@@ -1437,7 +1473,6 @@ body {
         background: transparent;
         border: none;
         color: var(--accent-cyan);
-        opacity: 1;
         text-shadow: 0 0 10px rgba(0, 255, 255, 0.85);
     }
 
@@ -1445,7 +1480,6 @@ body {
         background: transparent;
         border: none;
         color: #39ff14;
-        opacity: 1;
         text-shadow: 0 0 10px rgba(57, 255, 20, 0.85);
     }
 
