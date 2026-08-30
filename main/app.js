@@ -1,3 +1,45 @@
+// Mobile Navigation Toggle & Accessibility
+document.addEventListener('DOMContentLoaded', function() {
+    const nav = document.getElementById('main-nav');
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if (navToggle && nav) {
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = nav.classList.toggle('is-open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close when clicking a nav link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (nav.classList.contains('is-open')) {
+                    nav.classList.remove('is-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (nav.classList.contains('is-open') && !nav.contains(e.target)) {
+                nav.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+                nav.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.focus();
+            }
+        });
+    }
+});
+
 // Project Tab Filtering System
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.tab');
@@ -154,6 +196,7 @@ function updateActiveSection() {
 // Parallel drift effect for section backgrounds
 let driftTicking = false;
 function updateParallelDrift() {
+    if (window.innerWidth <= 768) return; // Skip heavy drift on small mobile devices
     const sections = document.querySelectorAll('.section');
     const scrollY = window.scrollY;
 
@@ -186,8 +229,8 @@ window.addEventListener('resize', requestDriftUpdate);
 
 // Intersection Observer for Fade-in Animations
 const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const fadeInObserver = new IntersectionObserver(function(entries) {
@@ -197,7 +240,7 @@ const fadeInObserver = new IntersectionObserver(function(entries) {
             entry.target.style.transform = 'translateY(0)';
         } else {
             entry.target.style.opacity = '0';
-            entry.target.style.transform = 'translateY(30px)';
+            entry.target.style.transform = 'translateY(24px)';
         }
     });
 }, observerOptions);
@@ -208,9 +251,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     animatedElements.forEach((el, index) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
-        el.style.transitionDelay = `${index * 0.08}s`;
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
+        el.style.transitionDelay = `${(index % 4) * 0.08}s`;
         fadeInObserver.observe(el);
     });
 });
@@ -224,7 +267,7 @@ const headingObserver = new IntersectionObserver(function(entries) {
             entry.target.classList.remove('is-visible');
         }
     });
-}, { threshold: 0.4 });
+}, { threshold: 0.3 });
 
 document.addEventListener('DOMContentLoaded', function() {
     const headings = document.querySelectorAll('.hero-title, .hero-subtitle, .section-title');
@@ -272,9 +315,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // Parallax Effect for Hero Background
 window.addEventListener('scroll', function() {
     const heroBackground = document.querySelector('.hero-background');
-    if (heroBackground) {
+    if (heroBackground && window.innerWidth > 768) {
         const scrolled = window.pageYOffset;
-        heroBackground.style.transform = `translateY(${scrolled * 0.5}px) scale(${1 + scrolled * 0.0001})`;
+        heroBackground.style.transform = `translateY(${scrolled * 0.4}px) scale(${1 + scrolled * 0.0001})`;
     }
 });
 
@@ -314,26 +357,24 @@ function requestIrisUpdate() {
 
 window.addEventListener('scroll', requestIrisUpdate);
 window.addEventListener('load', updateIrisAnimation);
-window.addEventListener('resize', updateIrisAnimation);
+window.addEventListener('resize', requestIrisUpdate);
 
-// Cursor Trail Effect (optional enhancement)
+// Cursor Trail Effect (desktop only)
 let cursorTrail = [];
-const maxTrailLength = 10;
-
 document.addEventListener('mousemove', function(e) {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 1024) {
         cursorTrail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
-        
-        // Remove old trail points
         cursorTrail = cursorTrail.filter(point => Date.now() - point.time < 500);
     }
 });
 
-// Add custom cursor effect on project items
+// Hover effect for project items
 const projectItems = document.querySelectorAll('.project-item');
 projectItems.forEach(item => {
     item.addEventListener('mouseenter', function() {
-        this.style.filter = 'brightness(1.1)';
+        if (window.innerWidth > 860) {
+            this.style.filter = 'brightness(1.08)';
+        }
     });
     
     item.addEventListener('mouseleave', function() {
@@ -343,44 +384,37 @@ projectItems.forEach(item => {
 
 // Keyboard Navigation Support
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowDown') {
-        const sections = Array.from(document.querySelectorAll('.section'));
-        const currentSection = sections.find(section => {
-            const rect = section.getBoundingClientRect();
-            return rect.top >= 0 && rect.top < window.innerHeight / 2;
-        });
-        
-        if (currentSection) {
-            const currentIndex = sections.indexOf(currentSection);
-            const nextSection = sections[currentIndex + 1];
-            if (nextSection) {
-                nextSection.scrollIntoView({ behavior: 'smooth' });
-            }
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        const activeEl = document.activeElement;
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+            return;
         }
-    } else if (event.key === 'ArrowUp') {
+        
         const sections = Array.from(document.querySelectorAll('.section'));
         const currentSection = sections.find(section => {
             const rect = section.getBoundingClientRect();
-            return rect.top >= 0 && rect.top < window.innerHeight / 2;
+            return rect.top >= -50 && rect.top < window.innerHeight / 2;
         });
         
         if (currentSection) {
             const currentIndex = sections.indexOf(currentSection);
-            const prevSection = sections[currentIndex - 1];
-            if (prevSection) {
-                prevSection.scrollIntoView({ behavior: 'smooth' });
+            const targetIndex = event.key === 'ArrowDown' ? currentIndex + 1 : currentIndex - 1;
+            const targetSection = sections[targetIndex];
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
     }
 });
 
-// Add CSS animation keyframes dynamically
+// CSS animation keyframes
 const style = document.createElement('style');
 style.textContent = `
     @keyframes fadeInUp {
         from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(24px);
         }
         to {
             opacity: 1;
@@ -390,19 +424,10 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Loading Animation
-window.addEventListener('load', function() {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 1s ease-in';
-        document.body.style.opacity = '1';
-    }, 100);
-});
-
 function updateLinePosition() {
     const page = document.querySelector('.page');
     const title = document.querySelector('.hero-title');
-    if (!page || !title) {
+    if (!page || !title || window.innerWidth <= 480) {
         return;
     }
 
@@ -411,7 +436,7 @@ function updateLinePosition() {
     page.style.setProperty('--line-top', `${lineTop}px`);
 }
 
-// Performance: Debounce scroll events
+// Performance: Debounce helper
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -424,14 +449,7 @@ function debounce(func, wait) {
     };
 }
 
-// Optimized scroll handler
-const handleScroll = debounce(function() {
-    // Your scroll logic here
-}, 10);
-
-window.addEventListener('scroll', handleScroll);
 window.addEventListener('load', updateLinePosition);
 window.addEventListener('resize', debounce(updateLinePosition, 100));
 
-console.log('Portfolio v2.0 loaded successfully! 🚀');
-
+console.log('Portfolio v2.0 responsive loaded successfully! 🚀');
