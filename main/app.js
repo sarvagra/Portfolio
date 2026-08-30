@@ -1,4 +1,4 @@
-// Mobile Navigation Toggle & Accessibility
+// Mobile Navigation Management & Scroll Hide/Show
 document.addEventListener('DOMContentLoaded', function() {
     const nav = document.getElementById('main-nav');
     const navToggle = document.getElementById('nav-toggle');
@@ -38,6 +38,56 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Mobile Horizontal Navbar Scroll Hide/Show
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    let navScrollTicking = false;
+
+    function updateMobileNavScroll() {
+        const mainNav = document.getElementById('main-nav');
+        if (!mainNav) {
+            navScrollTicking = false;
+            return;
+        }
+
+        if (window.innerWidth > 768) {
+            // Keep desktop/laptop nav unchanged
+            mainNav.classList.remove('nav-hidden');
+            navScrollTicking = false;
+            return;
+        }
+
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollDelta = currentScrollY - lastScrollY;
+
+        // If near top of page, always keep visible
+        if (currentScrollY <= 30) {
+            mainNav.classList.remove('nav-hidden');
+        } else if (scrollDelta > 6) {
+            // Scrolling DOWN -> comes in view
+            mainNav.classList.remove('nav-hidden');
+        } else if (scrollDelta < -6) {
+            // Scrolling UP -> hides
+            mainNav.classList.add('nav-hidden');
+        }
+
+        lastScrollY = Math.max(0, currentScrollY);
+        navScrollTicking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!navScrollTicking) {
+            window.requestAnimationFrame(updateMobileNavScroll);
+            navScrollTicking = true;
+        }
+    }, { passive: true });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            const mainNav = document.getElementById('main-nav');
+            if (mainNav) mainNav.classList.remove('nav-hidden');
+        }
+    });
 });
 
 // Project Tab Filtering System
