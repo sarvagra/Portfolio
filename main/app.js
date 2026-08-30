@@ -1,0 +1,437 @@
+// Project Tab Filtering System
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab');
+    const projectItems = document.querySelectorAll('.project-item');
+    const subtitle = document.getElementById('projects-subtitle');
+
+    // Subtitle texts for each tab
+    const subtitleTexts = {
+        'web': 'Transforming algorithms into intelligent solutions',
+        'mobile': 'Turning raw information into meaningful insights',
+        'video': 'Proving skills through global challenges'
+    };
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const filterValue = this.getAttribute('data-tab');
+
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            // Update subtitle text with animation
+            if (subtitle && subtitleTexts[filterValue]) {
+                subtitle.style.opacity = '0';
+                subtitle.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    subtitle.textContent = subtitleTexts[filterValue];
+                    subtitle.style.opacity = '1';
+                    subtitle.style.transform = 'translateY(0)';
+                }, 200);
+            }
+
+            // Filter projects with animation
+            projectItems.forEach((item, index) => {
+                const itemCategory = item.getAttribute('data-category');
+                
+                if (itemCategory === filterValue) {
+                    item.classList.remove('hidden');
+                    item.style.animation = 'fadeInUp 0.5s ease-out forwards';
+                    item.style.animationDelay = `${index * 0.1}s`;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+    });
+});
+
+// Hero subtitle typing effect
+document.addEventListener('DOMContentLoaded', function() {
+    const typedEl = document.querySelector('.typed-text');
+    if (!typedEl) {
+        return;
+    }
+
+    const phrases = (typedEl.getAttribute('data-phrases') || '')
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean);
+
+    if (!phrases.length) {
+        return;
+    }
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    const typeSpeed = 80;
+    const deleteSpeed = 50;
+    const pauseAfterType = 1200;
+    const pauseAfterDelete = 400;
+
+    function tick() {
+        const currentPhrase = phrases[phraseIndex];
+
+        if (isDeleting) {
+            charIndex -= 1;
+        } else {
+            charIndex += 1;
+        }
+
+        typedEl.textContent = currentPhrase.slice(0, Math.max(charIndex, 0));
+
+        let delay = isDeleting ? deleteSpeed : typeSpeed;
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            delay = pauseAfterType;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            delay = pauseAfterDelete;
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+
+        setTimeout(tick, delay);
+    }
+
+    tick();
+});
+
+// Smooth Scroll Navigation
+const navLinks = document.querySelectorAll('.nav-link, .next-section a');
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            targetSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Active Navigation Highlighting and Next Section UI
+function updateActiveSection() {
+    let current = '';
+    const sections = document.querySelectorAll('.section');
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.pageYOffset >= sectionTop - 300) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    const links = document.querySelectorAll('.nav-link');
+    links.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+
+    const nextSections = document.querySelectorAll('.next-section');
+    nextSections.forEach(item => item.classList.remove('is-active'));
+
+    if (current) {
+        const activeSection = document.getElementById(current);
+        if (activeSection) {
+            const activeNext = activeSection.querySelector('.next-section');
+            if (activeNext) {
+                activeNext.classList.add('is-active');
+            }
+        }
+    }
+}
+
+// Parallel drift effect for section backgrounds
+let driftTicking = false;
+function updateParallelDrift() {
+    const sections = document.querySelectorAll('.section');
+    const scrollY = window.scrollY;
+
+    sections.forEach((section, index) => {
+        const sectionTop = section.offsetTop;
+        const sectionMid = sectionTop + section.offsetHeight / 2;
+        const delta = scrollY + window.innerHeight / 2 - sectionMid;
+        const driftX = delta * 0.03;
+        const driftY = delta * 0.01 + index * 6;
+
+        section.style.setProperty('--drift-x', `${driftX}px`);
+        section.style.setProperty('--drift-y', `${driftY}px`);
+    });
+
+    driftTicking = false;
+}
+
+function requestDriftUpdate() {
+    if (!driftTicking) {
+        window.requestAnimationFrame(updateParallelDrift);
+        driftTicking = true;
+    }
+}
+
+window.addEventListener('scroll', updateActiveSection);
+window.addEventListener('load', updateActiveSection);
+window.addEventListener('scroll', requestDriftUpdate);
+window.addEventListener('load', updateParallelDrift);
+window.addEventListener('resize', requestDriftUpdate);
+
+// Intersection Observer for Fade-in Animations
+const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const fadeInObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        } else {
+            entry.target.style.opacity = '0';
+            entry.target.style.transform = 'translateY(30px)';
+        }
+    });
+}, observerOptions);
+
+// Observe elements for animation
+document.addEventListener('DOMContentLoaded', function() {
+    const animatedElements = document.querySelectorAll('.project-item, .lab-category, .code-block, .timeline-wrapper, .info-card, .timeline-step');
+    
+    animatedElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+        el.style.transitionDelay = `${index * 0.08}s`;
+        fadeInObserver.observe(el);
+    });
+});
+
+// Heading reveal animation
+const headingObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+        } else {
+            entry.target.classList.remove('is-visible');
+        }
+    });
+}, { threshold: 0.4 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const headings = document.querySelectorAll('.hero-title, .hero-subtitle, .section-title');
+    headings.forEach(heading => {
+        heading.classList.add('heading-reveal');
+        headingObserver.observe(heading);
+    });
+});
+
+// Section Collide Animation on Scroll
+const sectionCollideObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('collide-animated')) {
+            entry.target.classList.add('collide-animate');
+            entry.target.classList.add('collide-animated');
+            
+            setTimeout(() => {
+                entry.target.classList.remove('collide-animate');
+            }, 600);
+        } else if (!entry.isIntersecting) {
+            entry.target.classList.remove('collide-animated');
+            entry.target.classList.remove('collide-animate');
+        }
+    });
+}, { threshold: 0.2 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        sectionCollideObserver.observe(section);
+    });
+});
+
+// Project Spinner Animation Effect
+document.addEventListener('DOMContentLoaded', function() {
+    const spinners = document.querySelectorAll('.project-spinner');
+    
+    spinners.forEach(spinner => {
+        setInterval(() => {
+            spinner.style.opacity = Math.random() > 0.5 ? '1' : '0.5';
+        }, 2000);
+    });
+});
+
+// Parallax Effect for Hero Background
+window.addEventListener('scroll', function() {
+    const heroBackground = document.querySelector('.hero-background');
+    if (heroBackground) {
+        const scrolled = window.pageYOffset;
+        heroBackground.style.transform = `translateY(${scrolled * 0.5}px) scale(${1 + scrolled * 0.0001})`;
+    }
+});
+
+// Circular Iris Animation for Hero Section
+let irisAnimationTicking = false;
+
+function updateIrisAnimation() {
+    const heroSection = document.querySelector('.hero-section');
+    const aboutSection = document.querySelector('.about-section');
+    
+    if (!heroSection || !aboutSection) return;
+    
+    const heroTop = heroSection.offsetTop;
+    const aboutTop = aboutSection.offsetTop;
+    const scrollY = window.scrollY;
+    
+    // Start animation when scrolling begins, end when about section starts
+    const startScroll = heroTop;
+    const endScroll = aboutTop;
+    
+    const scrollProgress = Math.max(0, Math.min(1, (scrollY - startScroll) / (endScroll - startScroll)));
+    
+    // Circle starts at 150vw and contracts to 0vw
+    const radius = 150 * (1 - scrollProgress);
+    
+    heroSection.style.setProperty('--circle-radius', `${radius}vw`);
+    
+    irisAnimationTicking = false;
+}
+
+function requestIrisUpdate() {
+    if (!irisAnimationTicking) {
+        window.requestAnimationFrame(updateIrisAnimation);
+        irisAnimationTicking = true;
+    }
+}
+
+window.addEventListener('scroll', requestIrisUpdate);
+window.addEventListener('load', updateIrisAnimation);
+window.addEventListener('resize', updateIrisAnimation);
+
+// Cursor Trail Effect (optional enhancement)
+let cursorTrail = [];
+const maxTrailLength = 10;
+
+document.addEventListener('mousemove', function(e) {
+    if (window.innerWidth > 768) {
+        cursorTrail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+        
+        // Remove old trail points
+        cursorTrail = cursorTrail.filter(point => Date.now() - point.time < 500);
+    }
+});
+
+// Add custom cursor effect on project items
+const projectItems = document.querySelectorAll('.project-item');
+projectItems.forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        this.style.filter = 'brightness(1.1)';
+    });
+    
+    item.addEventListener('mouseleave', function() {
+        this.style.filter = 'brightness(1)';
+    });
+});
+
+// Keyboard Navigation Support
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowDown') {
+        const sections = Array.from(document.querySelectorAll('.section'));
+        const currentSection = sections.find(section => {
+            const rect = section.getBoundingClientRect();
+            return rect.top >= 0 && rect.top < window.innerHeight / 2;
+        });
+        
+        if (currentSection) {
+            const currentIndex = sections.indexOf(currentSection);
+            const nextSection = sections[currentIndex + 1];
+            if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    } else if (event.key === 'ArrowUp') {
+        const sections = Array.from(document.querySelectorAll('.section'));
+        const currentSection = sections.find(section => {
+            const rect = section.getBoundingClientRect();
+            return rect.top >= 0 && rect.top < window.innerHeight / 2;
+        });
+        
+        if (currentSection) {
+            const currentIndex = sections.indexOf(currentSection);
+            const prevSection = sections[currentIndex - 1];
+            if (prevSection) {
+                prevSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }
+});
+
+// Add CSS animation keyframes dynamically
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Loading Animation
+window.addEventListener('load', function() {
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+        document.body.style.transition = 'opacity 1s ease-in';
+        document.body.style.opacity = '1';
+    }, 100);
+});
+
+function updateLinePosition() {
+    const page = document.querySelector('.page');
+    const title = document.querySelector('.hero-title');
+    if (!page || !title) {
+        return;
+    }
+
+    const titleTop = title.getBoundingClientRect().top + window.scrollY;
+    const lineTop = Math.max(0, titleTop - 80 - 6);
+    page.style.setProperty('--line-top', `${lineTop}px`);
+}
+
+// Performance: Debounce scroll events
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Optimized scroll handler
+const handleScroll = debounce(function() {
+    // Your scroll logic here
+}, 10);
+
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('load', updateLinePosition);
+window.addEventListener('resize', debounce(updateLinePosition, 100));
+
+console.log('Portfolio v2.0 loaded successfully! 🚀');
+

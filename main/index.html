@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarvagra - Portfolio</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="page">
+        <!-- Fixed Navigation -->
+        <nav class="nav">
+            <div class="nav-links">
+                <a href="#start" class="nav-link">Start/&gt;</a>
+                <a href="#about" class="nav-link">About/&gt;</a>
+                <a href="#work" class="nav-link">Work/&gt;</a>
+                <a href="#achievements" class="nav-link">Achievements/&gt;</a>
+                <a href="#contact" class="nav-link">Contact/&gt;</a>
+            </div>
+        </nav>
+        <div class="vertical-line"></div>
+
+        <!-- Start Section -->
+        <section id="start" class="section hero-section">
+            <div class="section-marker">
+                <span class="marker-dot"></span>
+                <span class="marker-label">Start</span>
+            </div>
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Hi, my name is <span class="highlight">Sarvagra</span></h1>
+                <h2 class="hero-subtitle">
+                    I'm <span class="typed-text"
+                        data-phrases="an ML Architect, a Data Scientist, into competitive DS"></span>
+                </h2>
+                <button class="hero-btn" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">
+                    Let me show You...
+                </button>
+                <div class="scroll-arrow">↓</div>
+            </div>
+            <div class="next-section">
+                <span>Go to next section</span>
+                <a href="#about">About/&gt;</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section about-section">
+            <div class="section-marker">
+                <span class="marker-dot"></span>
+                <span class="marker-label">About</span>
+            </div>
+            <div class="container">
+                <h2 class="section-title">“Beyond the Code”</h2>
+                <h3 class="section-subtitle">Academic Timeline &amp; Personal Journey</h3>
+
+                <div class="about-layout">
+                    <!-- Academic Timeline -->
+                    <div class="timeline-wrapper">
+                        <div class="panel-header">
+                            <span class="arrow-icon">→</span>
+                            <span>Academic_Timeline /&gt;</span>
+                        </div>
+                        <div class="timeline">
+                            <!-- Timeline Step 1: University -->
+                            <div class="timeline-step current">
+                                <div class="timeline-node">
+                                    <div class="node-dot"></div>
+                                    <div class="node-line"></div>
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="step-meta">
+                                        <span class="step-badge ongoing">ONGOING</span>
+                                        <span class="step-grade">8.5 CGPA</span>
+                                    </div>
+                                    <h4 class="step-title">University — B.Tech in CSE</h4>
+                                    <p class="step-comment"><span class="comment-slash">//</span> Currently pursuing
+                                        dual degrees</p>
+
+                                    <div class="step-content">
+                                        <div class="detail-group">
+                                            <span class="detail-heading"><span class="comment-slash">//</span> As an ML
+                                                enthusiast, I thrive on:</span>
+                                            <div class="skill-chips">
+                                                <span class="chip">Data Science</span>
+                                                <span class="chip">Machine Learning</span>
+                                                <span class="chip">Deep Learning</span>
+                                                <span class="chip">Hyperparameter Tuning</span>
+                                                <span class="chip">Automation</span>
+                                                <span class="chip">Frontend &amp; Backend (enough to run my
+                                                    projects)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="detail-group">
+                                            <span class="detail-heading"><span class="comment-slash">//</span> Always
+                                                eager to explore new challenges:</span>
+                                            <div class="platform-chips">
+                                                <span class="platform-chip">Kaggle</span>
+                                                <span class="platform-chip">Hacker Rank</span>
+                                                <span class="platform-chip">Leetcode</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="detail-group">
+                                            <span class="detail-heading"><span class="comment-slash">//</span>
+                                                Activities:</span>
+                                            <p class="step-text">Taking part in various clubs in my university</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Step 2: 12th Grade -->
+                            <div class="timeline-step">
+                                <div class="timeline-node">
+                                    <div class="node-dot"></div>
+                                    <div class="node-line"></div>
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="step-meta">
+                                        <span class="step-badge">COMPLETED</span>
+                                        <span class="step-grade">88.9%</span>
+                                    </div>
+                                    <h4 class="step-title">Senior-High-School (12th)</h4>
+                                    <p class="step-comment"><span class="comment-slash">//</span> Advanced science and
+                                        mathematics foundation</p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Step 3: 10th Grade -->
+                            <div class="timeline-step">
+                                <div class="timeline-node">
+                                    <div class="node-dot"></div>
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="step-meta">
+                                        <span class="step-badge">COMPLETED</span>
+                                        <span class="step-grade">90.6%</span>
+                                    </div>
+                                    <h4 class="step-title">High-School (10th)</h4>
+                                    <p class="step-comment"><span class="comment-slash">//</span> Foundational academics
+                                        with distinction</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Summary Cards -->
+                    <div class="about-sidebar">
+                        <div class="info-card">
+                            <div class="panel-header">
+                                <span class="arrow-icon">→</span>
+                                <span>Identity /&gt;</span>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="info-field">
+                                    <span class="field-label">name:</span>
+                                    <span class="field-value">'Sarvagra'</span>
+                                </div>
+                                <div class="info-field">
+                                    <span class="field-label">location:</span>
+                                    <span class="field-value">'India'</span>
+                                </div>
+                                <div class="info-field">
+                                    <span class="field-label">mission:</span>
+                                    <span class="field-value highlight-val">'Transform data into insights'</span>
+                                </div>
+                                <div class="info-field">
+                                    <span class="field-label">passion:</span>
+                                    <span class="field-value">'Sharpen skills and learn from global data science
+                                        community'</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="panel-header">
+                                <span class="arrow-icon">→</span>
+                                <span>Interests_&amp;_Passions /&gt;</span>
+                            </div>
+                            <div class="info-card-body">
+                                <ul class="interest-bullets">
+                                    <li><span class="bullet-arrow">▹</span> Guitar</li>
+                                    <li><span class="bullet-arrow">▹</span> Basketball</li>
+                                    <li><span class="bullet-arrow">▹</span> Adventurous trips</li>
+                                    <li><span class="bullet-arrow">▹</span> Movies and series</li>
+                                </ul>
+                                <div class="mission-callout">
+                                    <p class="mission-tag"><span class="comment-slash">//</span> Building the future
+                                        with ML</p>
+                                    <p class="mission-text">Transforming complex data challenges into actionable
+                                        intelligent systems.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="next-section">
+                <span>Go to next section</span>
+                <a href="#work">Work/&gt;</a>
+            </div>
+        </section>
+
+        <!-- Work Section -->
+        <section id="work" class="section work-section">
+            <div class="section-marker">
+                <span class="marker-dot"></span>
+                <span class="marker-label">Work</span>
+            </div>
+            <div id="techstack" class="techstack">
+                <h3 class="section-subtitle techstack-title">TechStack /&gt;</h3>
+                <ul class="techstack-list">
+                    <li><a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank"><img
+                                src="https://cdn.simpleicons.org/python/white" class="tech-icon" alt="Python">Python</a>
+                    </li>
+                    <li><a href="https://en.wikipedia.org/wiki/C%2B%2B" target="_blank"><img
+                                src="https://cdn.simpleicons.org/cplusplus/white" class="tech-icon" alt="C++">C++</a>
+                    </li>
+                    <li><a href="https://en.wikipedia.org/wiki/Data_structure" target="_blank"><img
+                                src="https://cdn.simpleicons.org/databricks/white" class="tech-icon" alt="DSA">DSA</a>
+                    </li>
+                    <li><a href="https://www.tensorflow.org/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/tensorflow/white" class="tech-icon"
+                                alt="TensorFlow">TensorFlow</a></li>
+                    <li><a href="https://pytorch.org/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/pytorch/white" class="tech-icon"
+                                alt="PyTorch">PyTorch</a></li>
+                    <li><a href="https://scikit-learn.org/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/scikitlearn/white" class="tech-icon"
+                                alt="scikit-learn">scikit-learn</a></li>
+                    <li><a href="https://numpy.org/" target="_blank"><img src="https://cdn.simpleicons.org/numpy/white"
+                                class="tech-icon" alt="NumPy">NumPy</a></li>
+                    <li><a href="https://pandas.pydata.org/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/pandas/white" class="tech-icon" alt="Pandas">Pandas</a>
+                    </li>
+                    <li><a href="https://en.wikipedia.org/wiki/SQL" target="_blank"><img
+                                src="https://cdn.simpleicons.org/mysql/white" class="tech-icon" alt="SQL">SQL</a></li>
+                    <li><a href="https://www.docker.com/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/docker/white" class="tech-icon" alt="Docker">Docker</a>
+                    </li>
+                    <li><a href="https://aws.amazon.com/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/amazonaws/white" class="tech-icon" alt="AWS">AWS</a>
+                    </li>
+                    <li><a href="https://git-scm.com/" target="_blank"><img src="https://cdn.simpleicons.org/git/white"
+                                class="tech-icon" alt="Git">Git</a></li>
+                    <li><a href="https://jupyter.org/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/jupyter/white" class="tech-icon"
+                                alt="Jupyter">Jupyter</a></li>
+                    <li><a href="https://fastapi.tiangolo.com/" target="_blank"><img
+                                src="https://cdn.simpleicons.org/fastapi/white" class="tech-icon"
+                                alt="FastAPI">FastAPI</a></li>
+                </ul>
+            </div>
+            <div class="container">
+
+                <h2 class="section-title">"Where actual skill thrives"</h2>
+                <h3 class="section-subtitle" id="projects-subtitle">Transforming algorithms into intelligent solutions
+                </h3>
+
+                <div class="tabs">
+                    <button class="tab active" data-tab="web">MODELS</button>
+                    <button class="tab" data-tab="mobile">DATA</button>
+                    <button class="tab" data-tab="video">COMPETITION</button>
+                </div>
+
+                <div class="projects-container">
+                    <!-- Web Projects -->
+                    <div class="project-item" data-category="web">
+                        <div class="project-thumbnail" style="background-image: url('../res/thumb.png');"></div>
+                        <div class="project-info">
+                            <div class="project-content">
+                                <h4>Agri_model</h4>
+                                <ul class="project-details">
+                                    <li>- Provides Disease Identification & Confidence Ranking with Contextual Insights
+                                        & Localized Remedies</li>
+                                    <li>- Returns confidence scores for top 3 predicted diseases</li>
+                                    <li>- Works on 33 diseases across 14 <span class="crops-hover">crops
+                                            <span class="crops-tooltip">Apple, Blueberry, Cherry, Corn, Grape, Orange,
+                                                Peach, Bell Pepper, Potato, Raspberry, Soybean, Squash, Strawberry,
+                                                Tomato</span>
+                                        </span></li>
+                                    <li>- Accuracy: 98.47%</li>
+                                </ul>
+                            </div>
+                            <div class="project-actions">
+                                <button class="try-on-btn">Try On →</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item" data-category="web">
+                        <div class="project-thumbnail" style="background-image: url('../res/house.png');"></div>
+                        <div class="project-info">
+                            <div class="project-content">
+                                <h4>House Price Prediction Model</h4>
+                                <ul class="project-details">
+                                    <li>- Predicts house prices using socio-economic and geographic features</li>
+                                    <li>- XGBoost model for high accuracy with Joblib serialization</li>
+                                    <li>- Works on California Housing Dataset with 8 key features</li>
+                                    <li>- Fully live API hosted on Render with interactive Swagger UI</li>
+                                </ul>
+                            </div>
+                            <div class="project-actions">
+                                <button class="try-on-btn">Try On →</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="project-item" data-category="web">
+                    <div class="project-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <div class="project-info">
+                        <div class="project-content">
+                            <h4>Gods_eye</h4>
+                            <ul class="project-details">
+                                <li>- Detects if an image is real or synthetic</li>
+                                <li>- Advanced AI-powered analysis for deepfake detection</li>
+                                <li>- Analyzes image artifacts and digital fingerprints</li>
+                                <li>- Accuracy: 95.3%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> -->
+
+
+
+                    <div class="project-item" data-category="web">
+                        <div class="project-thumbnail"
+                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                        <div class="project-info">
+                            <div class="project-content">
+                                <h4>RAG Student Support Assistant</h4>
+                                <ul class="project-details">
+                                    <li>- AI-powered chatbot using RAG (Retrieval-Augmented Generation) for student
+                                        queries</li>
+                                    <li>- Generates embeddings using Jina AI API for semantic search</li>
+                                    <li>- Structures and indexes educational data for accurate retrieval</li>
+                                    <li>- Provides contextual answers with source citations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" data-category="web">
+                        <div class="project-thumbnail" style="background-image: url('../res/robo.png');"></div>
+                        <div class="project-info">
+                            <h4>Coming Soon</h4>
+                        </div>
+                    </div>
+
+                    <!-- <div class="project-item" data-category="web">
+                    <div class="project-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                    <div class="project-info">
+                        <h4>Project Name</h4>
+                    </div>
+                </div>
+
+                <div class="project-item" data-category="web">
+                    <div class="project-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+                    <div class="project-info">
+                        <h4>Project Name</h4>
+                    </div>
+                </div> -->
+
+                    <!-- Mobile Projects -->
+                    <div class="project-item hidden" data-category="mobile">
+                        <div class="project-thumbnail" style="background-image: url('../res/robo.png');"></div>
+                        <div class="project-info">
+                            <h4>Coming Soon</h4>
+                        </div>
+                    </div>
+
+                    <!-- Video Projects -->
+                    <div class="project-item hidden" data-category="video">
+                        <div class="project-thumbnail" style="background-image: url('../res/robo.png');"></div>
+                        <div class="project-info">
+                            <h4>Coming Soon</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="next-section">
+                <span>Go to next section</span>
+                <a href="#achievements">Achievements/&gt;</a>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="section lab-section">
+            <div class="section-marker">
+                <span class="marker-dot"></span>
+                <span class="marker-label">Achievements</span>
+            </div>
+            <div class="container">
+                <h2 class="section-title">"Accomplishments"</h2>
+                <h3 class="section-subtitle">Milestones, awards, and notable highlights.</h3>
+
+                <div class="lab-grid">
+                    <div class="lab-category">
+                        <h4>Awards</h4>
+                        <ul>
+                            <li><a href="#">Kaggle Medals- 0:🏅 0:🥈 1:🥉 </a></li>
+                            <li><a href="#">.</a></li>
+                            <li><a href="#">.</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="lab-category">
+                        <h4>Certifications</h4>
+                        <ul>
+                            <li><a href="#">AWS AI-ML workshop</a></li>
+                            <li><a href="#">Deep Learning Specialization</a></li>
+                            <li><a href="#">IIT-M workshop on Dynamic Programming</a></li>
+                        </ul>
+                    </div>
+
+                    <!--<div class="lab-category">
+                    <h4>Competitions</h4>
+                    <ul>
+                        <li><a href="#">.</a></li>
+                        <li><a href="#">.</a></li>
+                        <li><a href="#">.</a></li>
+                    </ul>
+                </div>
+
+                <div class="lab-category">
+                    <h4>.</h4>
+                    <ul>
+                        <li><a href="#">.</a></li>
+                        <li><a href="#">.</a></li>
+                        <li><a href="#">.</a></li>
+                    </ul>
+                </div>
+
+                <div class="lab-category">
+                    <h4>Highlights</h4>
+                    <ul>
+                        <li><a href="#">Scaled ML system to 10M users</a></li>
+                        <li><a href="#">Reduced inference latency by 40%</a></li>
+                    </ul>
+                </div>-->
+                </div>
+            </div>
+            <div class="next-section">
+                <span>Go to next section</span>
+                <a href="#contact">Contact/&gt;</a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact-section">
+            <div class="section-marker">
+                <span class="marker-dot"></span>
+                <span class="marker-label">Contact</span>
+            </div>
+            <div class="container">
+                <h2 class="section-title">"Let's get talking"</h2>
+                <h3 class="section-subtitle">Find me on:</h3>
+
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/sarvagra" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">X</a>
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">Discord</a>
+                    <a href="mailto:sarvagrawork@gmail.com">E-mail</a>
+                    <a href="#" target="_blank">Kaggle</a>
+                    <a href="#" target="_blank">HackerRank</a>
+                    <a href="#" target="_blank">LeetCode</a>
+                    <a href="https://github.com/sarvagra" target="_blank">GitHub</a>
+                </div>
+
+                <a href="https://linktr.ee/sarvagra" target="_blank" rel="noopener noreferrer" class="contact-btn">GET
+                    IN TOUCH</a>
+
+                <footer class="footer">
+                    <p>© Made with 💚 by Sarvagra. Circa 2026.</p>
+                </footer>
+            </div>
+            <div class="next-section top">
+                <span>Go to next section</span>
+                <a href="#start">Start/&gt;</a>
+            </div>
+        </section>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
